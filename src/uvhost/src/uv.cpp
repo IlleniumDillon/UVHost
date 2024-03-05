@@ -28,6 +28,7 @@ UV::UV(std::string name_, std::string ip_, int id_)
 
 void UV::statusUpdateCallback(const uvinterfaces::msg::UvStatus::SharedPtr msg)
 {
+    RCLCPP_INFO(rclcpp::get_logger("uv"),"callback");
     voltage = msg->voltage;
     armHand = msg->arm_hand;
     armArm = msg->arm_arm;

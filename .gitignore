@@ -2,6 +2,7 @@
 build
 install
 log
+.qtc_clangd
 
 # Prerequisites
 *.d

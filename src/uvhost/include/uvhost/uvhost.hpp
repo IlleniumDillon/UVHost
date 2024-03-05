@@ -16,15 +16,12 @@ public:
     UVHostNode();
 
     void waitForConnect(std::chrono::milliseconds timeout);
+    void freshConnectStatus();
 protected:
 
 private:
     void timerCallback();
 public:
-
-protected:
-
-private:
     bool isUp = false;
     rclcpp::TimerBase::SharedPtr timer;
     std::vector<UV*> uvList;

@@ -25,10 +25,10 @@ UVHostNode::UVHostNode()
         UV* temp = new UV(params.at(0),params.at(1),uvList.size());
         uvList.push_back(temp);
         pubList.push_back(
-            this->create_publisher<uvinterfaces::msg::UvCommand>(temp->name+"/HostCommand",10)
+            this->create_publisher<uvinterfaces::msg::UvCommand>("/"+temp->name+"/hostcommand",10)
         );
         subStatusList.push_back(
-            this->create_subscription<uvinterfaces::msg::UvStatus>(temp->name+"/Status",10,std::bind(&UV::statusUpdateCallback,temp,std::placeholders::_1))
+            this->create_subscription<uvinterfaces::msg::UvStatus>("/"+temp->name+"/status",10,std::bind(&UV::statusUpdateCallback,temp,std::placeholders::_1))
         );
     }
     
@@ -56,16 +56,34 @@ void UVHostNode::waitForConnect(std::chrono::milliseconds timeout)
     isUp = ok;
 }
 
-void UVHostNode::timerCallback()
+void UVHostNode::freshConnectStatus()
 {
-    if(isUp == false) return;
+    bool ok = true;
     for(auto uv : uvList)
     {
-        if(uv->isUp == false) continue;
+        if(uv->voltage < 11.7)
+        {
+            ok = false;
+            RCLCPP_WARN(this->get_logger(),"%s is not answering:%f",uv->name.c_str(),uv->voltage);
+        }
+        else
+        {
+            uv->isUp = true;
+        }
+    }
+    isUp = ok;
+}
+
+void UVHostNode::timerCallback()
+{
+    //if(isUp == false) return;
+    for(auto uv : uvList)
+    {
+        //if(uv->isUp == false) continue;
         if(uv->voltage < 11.7)
         {
             uv->isUp = false;
-            RCLCPP_ERROR(this->get_logger(),"LOW POWER:%s",uv->name.c_str());
+            //RCLCPP_ERROR(this->get_logger(),"LOW POWER:%s",uv->name.c_str());
         }
     }
 }
