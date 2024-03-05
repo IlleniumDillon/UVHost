@@ -7,9 +7,15 @@
 class UV
 {
 public:
+    /// @brief declare a uv object
+    /// @param name_ name of the vehicle
+    /// @param ip_ ipv4 address of the vehicle
+    /// @param id_ id num
     UV(std::string name_,std::string ip_,int id_);
-
+    /// @brief callback to update status
+    /// @param msg 
     void statusUpdateCallback(const uvinterfaces::msg::UvStatus::SharedPtr msg);
+    /// @brief callback to update image
     void imgUpdateCallback();
 public:
 /// Identity information  
