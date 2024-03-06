@@ -1,4 +1,14 @@
 #include "joystick.hpp"
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <iostream>
+#include <linux/input.h>
+#include <linux/joystick.h>
 
 Joystick::Joystick(std::string dev)
 {

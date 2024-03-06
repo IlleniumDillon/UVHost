@@ -74,6 +74,30 @@ void UVHostNode::freshConnectStatus()
     isUp = ok;
 }
 
+void UVHostNode::pubCommandTo(int id, std::shared_ptr<Joystick> j)
+{
+    uvinterfaces::msg::UvCommand msg;
+    msg.a = j->a;
+    msg.b = j->b;
+    msg.x = j->x;
+    msg.y = j->y;
+    msg.lbu = j->lbu;
+    msg.lbd = j->lbd;
+    msg.rbu = j->rbu;
+    msg.rbd = j->rbd;
+    msg.select = j->select;
+    msg.start = j->start;
+    msg.lo = j->lo;
+    msg.ro = j->ro;
+    msg.lx = j->lx;
+    msg.ly = j->ly;
+    msg.rx = j->rx;
+    msg.ry = j->ry;
+    msg.xx = j->xx;
+    msg.yy = j->yy;
+    pubList.at(id)->publish(msg);
+}
+
 void UVHostNode::timerCallback()
 {
     //if(isUp == false) return;

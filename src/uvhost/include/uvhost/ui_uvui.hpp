@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
@@ -32,8 +34,10 @@ public:
     QGridLayout *gridLayout_3;
     QGroupBox *groupBoxUvList;
     QGridLayout *gridLayout;
-    QListWidget *listWidgetUvList;
+    QHBoxLayout *horizontalLayout;
     QComboBox *comboBoxSelect;
+    QCheckBox *checkBoxRemote;
+    QListWidget *listWidgetUvList;
     QPushButton *pushButtonRefresh;
     QGroupBox *groupBoxStatus;
     QGridLayout *gridLayout_2;
@@ -59,6 +63,21 @@ public:
         groupBoxUvList->setSizePolicy(sizePolicy);
         gridLayout = new QGridLayout(groupBoxUvList);
         gridLayout->setObjectName("gridLayout");
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
+        comboBoxSelect = new QComboBox(groupBoxUvList);
+        comboBoxSelect->setObjectName("comboBoxSelect");
+
+        horizontalLayout->addWidget(comboBoxSelect);
+
+        checkBoxRemote = new QCheckBox(groupBoxUvList);
+        checkBoxRemote->setObjectName("checkBoxRemote");
+
+        horizontalLayout->addWidget(checkBoxRemote);
+
+
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+
         listWidgetUvList = new QListWidget(groupBoxUvList);
         listWidgetUvList->setObjectName("listWidgetUvList");
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -68,11 +87,6 @@ public:
         listWidgetUvList->setSizePolicy(sizePolicy1);
 
         gridLayout->addWidget(listWidgetUvList, 1, 0, 1, 1);
-
-        comboBoxSelect = new QComboBox(groupBoxUvList);
-        comboBoxSelect->setObjectName("comboBoxSelect");
-
-        gridLayout->addWidget(comboBoxSelect, 0, 0, 1, 1);
 
         pushButtonRefresh = new QPushButton(groupBoxUvList);
         pushButtonRefresh->setObjectName("pushButtonRefresh");
@@ -112,6 +126,7 @@ public:
     {
         UVUI->setWindowTitle(QCoreApplication::translate("UVUI", "MainWindow", nullptr));
         groupBoxUvList->setTitle(QCoreApplication::translate("UVUI", "uvList", nullptr));
+        checkBoxRemote->setText(QCoreApplication::translate("UVUI", "RemoteControl", nullptr));
         pushButtonRefresh->setText(QCoreApplication::translate("UVUI", "refresh", nullptr));
         groupBoxStatus->setTitle(QCoreApplication::translate("UVUI", "Status", nullptr));
     } // retranslateUi

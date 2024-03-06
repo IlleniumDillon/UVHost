@@ -1,15 +1,5 @@
-#pragma once 
-#include <stdio.h>  
-#include <unistd.h>  
-#include <string.h>  
-#include <sys/types.h>  
-#include <sys/stat.h>  
-#include <fcntl.h>  
-#include <errno.h>
+#pragma once
 #include <iostream>
-#include <linux/input.h>  
-#include <linux/joystick.h>
-
 ///type of joystick frame
 #define XBOX_TYPE_BUTTON    0x01  
 #define XBOX_TYPE_AXIS      0x02  

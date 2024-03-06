@@ -5,6 +5,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "uvinterfaces/msg/uv_command.hpp"
 #include "uvinterfaces/msg/uv_status.hpp"
+#include "joystick.hpp"
 
 using namespace std::chrono_literals;
 
@@ -17,6 +18,8 @@ public:
 
     void waitForConnect(std::chrono::milliseconds timeout);
     void freshConnectStatus();
+
+    void pubCommandTo(int id, std::shared_ptr<Joystick> j);
 protected:
 
 private:

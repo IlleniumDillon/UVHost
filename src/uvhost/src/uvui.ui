@@ -27,6 +27,20 @@
        <string>uvList</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QComboBox" name="comboBoxSelect"/>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxRemote">
+           <property name="text">
+            <string>RemoteControl</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item row="1" column="0">
         <widget class="QListWidget" name="listWidgetUvList">
          <property name="sizePolicy">
@@ -36,9 +50,6 @@
           </sizepolicy>
          </property>
         </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QComboBox" name="comboBoxSelect"/>
        </item>
        <item row="2" column="0">
         <widget class="QPushButton" name="pushButtonRefresh">
