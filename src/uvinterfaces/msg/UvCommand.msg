@@ -1,19 +1,7 @@
-int32     a
-int32     b
-int32     x
-int32     y
-int32     lbu
-int32     lbd
-int32     rbu
-int32     rbd
-int32     select
-int32     start
-int32     lo
-int32     ro
-
-int32     lx
-int32     ly
-int32     rx
-int32     ry
-int32     xx
-int32     yy
+float32 vc
+float32 wc
+uint16 hand
+uint16 arm
+uint16 base
+uint16 time
+float32 degree

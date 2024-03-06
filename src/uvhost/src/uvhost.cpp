@@ -44,7 +44,7 @@ void UVHostNode::waitForConnect(std::chrono::milliseconds timeout)
         ok = true;
         for(auto uv : uvList)
         {
-            if(uv->voltage < 11.7) 
+            if(uv->voltage < 11.1) 
             {
                 ok = false; 
                 RCLCPP_WARN(this->get_logger(),"%s is not answering",uv->name.c_str());
@@ -61,7 +61,7 @@ void UVHostNode::freshConnectStatus()
     bool ok = true;
     for(auto uv : uvList)
     {
-        if(uv->voltage < 11.7)
+        if(uv->voltage < 11.1)
         {
             ok = false;
             RCLCPP_WARN(this->get_logger(),"%s is not answering:%f",uv->name.c_str(),uv->voltage);
@@ -77,24 +77,28 @@ void UVHostNode::freshConnectStatus()
 void UVHostNode::pubCommandTo(int id, std::shared_ptr<Joystick> j)
 {
     uvinterfaces::msg::UvCommand msg;
-    msg.a = j->a;
-    msg.b = j->b;
-    msg.x = j->x;
-    msg.y = j->y;
-    msg.lbu = j->lbu;
-    msg.lbd = j->lbd;
-    msg.rbu = j->rbu;
-    msg.rbd = j->rbd;
-    msg.select = j->select;
-    msg.start = j->start;
-    msg.lo = j->lo;
-    msg.ro = j->ro;
-    msg.lx = j->lx;
-    msg.ly = j->ly;
-    msg.rx = j->rx;
-    msg.ry = j->ry;
-    msg.xx = j->xx;
-    msg.yy = j->yy;
+    msg.time = 0;
+    msg.degree = - 130.0 * (float)j->rx / 32767.0;
+    msg.vc = - 0.5 * (float)j->ly / 32767.0;
+    msg.wc = - 2.0 * (float)j->lx / 32767.0;
+    if(j->lbu)
+    {
+        msg.arm = 2048;
+        msg.base = 2048;
+    }
+    else
+    {
+        msg.arm = 3500;
+        msg.base = 500;
+    }
+    if(j->lbd)
+    {
+        msg.hand = 3000;
+    }
+    else
+    {
+        msg.hand = 2048;
+    }
     pubList.at(id)->publish(msg);
 }
 
@@ -104,7 +108,7 @@ void UVHostNode::timerCallback()
     for(auto uv : uvList)
     {
         //if(uv->isUp == false) continue;
-        if(uv->voltage < 11.7)
+        if(uv->voltage < 11.1)
         {
             uv->isUp = false;
             //RCLCPP_ERROR(this->get_logger(),"LOW POWER:%s",uv->name.c_str());
