@@ -23,7 +23,7 @@ UV::UV(std::string name_, std::string ip_, int id_)
     pitch = 0;
     yaw = 0;
     roll = 0;
-    image = new cv::Mat();
+    //image = new cv::Mat();
 }
 
 void UV::statusUpdateCallback(const uvinterfaces::msg::UvStatus::SharedPtr msg)

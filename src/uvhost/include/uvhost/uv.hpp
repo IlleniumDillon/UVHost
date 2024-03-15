@@ -47,5 +47,5 @@ public:
     float pitch,yaw,roll;
 
 /// image
-    cv::Mat* image;
+    cv::Mat image;
 };

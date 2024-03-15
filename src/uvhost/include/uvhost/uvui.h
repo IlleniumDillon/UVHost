@@ -22,11 +22,16 @@ public:
     ~UVUI();
     void updateUI();
     void timerEvent(QTimerEvent *e);
+    void imgCallback(sensor_msgs::msg::Image::ConstSharedPtr msg);
 
 private slots:
     void on_pushButtonRefresh_clicked();
 
     void on_checkBoxRemote_stateChanged(int arg1);
+
+    void on_checkBoxSave_stateChanged(int arg1);
+
+    void on_comboBoxSelect_currentIndexChanged(int index);
 
 private:
     Ui::UVUI *ui;
@@ -39,6 +44,8 @@ private:
     int timerUIID;
     int timerROSID;
     int timerJoy;
+
+    int cur_id = -1;
 };
 
 #endif // UVUI_H

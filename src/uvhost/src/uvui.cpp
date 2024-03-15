@@ -101,6 +101,17 @@ void UVUI::updateUI()
     model->item(7,1)->setText(QString("[%1,%1,%1]").arg(uv->vel_x,uv->vel_y,uv->vel_z));
     model->item(8,1)->setText(QString("[%1,%1,%1]").arg(uv->pos_x,uv->pos_y,uv->pos_z));
     model->item(9,1)->setText(QString("[%1,%1,%1]").arg(uv->roll,uv->pitch,uv->yaw));
+    if(cur_id==-1)
+    {
+        ui->labelImg->setText("NO SIGNAL");
+    }
+    else
+    {
+        cv::Mat* img_ptr = &node->uvList.at(cur_id)->image;
+        QImage img = QImage(img_ptr->data,img_ptr->cols,img_ptr->rows,QImage::Format_RGB888);
+        ui->labelImg->setPixmap(QPixmap::fromImage(img));
+        // node->uvList.at(cur_id)->image
+    }
 }
 
 void UVUI::timerEvent(QTimerEvent *e)
@@ -138,5 +149,28 @@ void UVUI::on_pushButtonRefresh_clicked()
 void UVUI::on_checkBoxRemote_stateChanged(int arg1)
 {
 
+}
+
+
+void UVUI::on_checkBoxSave_stateChanged(int arg1)
+{
+
+}
+
+
+void UVUI::on_comboBoxSelect_currentIndexChanged(int index)
+{
+    cur_id = index;
+    node->subImg = rclcpp::create_subscription<sensor_msgs::msg::Image>(node,"/color/image_raw",1,std::bind(&UVUI::imgCallback,this,std::placeholders::_1));
+
+}
+
+void UVUI::imgCallback(sensor_msgs::msg::Image::ConstSharedPtr msg)
+{
+    RCLCPP_INFO(rclcpp::get_logger("img"),"hurray!");
+    if(cur_id!=-1)
+    {
+        node->uvList.at(cur_id)->image = cv::Mat(msg->height,msg->width,CV_8UC3,(uchar*)msg->data.data()).clone();
+    }
 }
 

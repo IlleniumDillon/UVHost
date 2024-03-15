@@ -79,8 +79,13 @@ void UVHostNode::pubCommandTo(int id, std::shared_ptr<Joystick> j)
     uvinterfaces::msg::UvCommand msg;
     msg.time = 0;
     msg.degree = - 130.0 * (float)j->rx / 32767.0;
-    msg.vc = - 0.5 * (float)j->ly / 32767.0;
-    msg.wc = - 2.0 * (float)j->lx / 32767.0;
+    msg.vc = - 0.2 * (float)j->ly / 32767.0;
+    msg.wc = - 0.5 * (float)j->lx / 32767.0;
+    // msg.vc = - 0.45 * (float)j->ly / 32767.0;
+    // msg.wc = - 2.0 * (float)j->lx / 32767.0;
+    //
+    /*msg.vc = - 0.5 * (float)j->yy/ 32767.0;
+    msg.wc = - 3.0 * (float)j->xx / 32767.0;*/
     if(j->lbu)
     {
         msg.arm = 2048;
@@ -101,6 +106,7 @@ void UVHostNode::pubCommandTo(int id, std::shared_ptr<Joystick> j)
     }
     pubList.at(id)->publish(msg);
 }
+
 
 void UVHostNode::timerCallback()
 {

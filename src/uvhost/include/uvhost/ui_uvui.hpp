@@ -17,6 +17,7 @@
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -37,11 +38,15 @@ public:
     QHBoxLayout *horizontalLayout;
     QComboBox *comboBoxSelect;
     QCheckBox *checkBoxRemote;
+    QCheckBox *checkBoxSave;
     QListWidget *listWidgetUvList;
     QPushButton *pushButtonRefresh;
     QGroupBox *groupBoxStatus;
     QGridLayout *gridLayout_2;
     QTableView *tableViewStatus;
+    QGroupBox *groupBox;
+    QGridLayout *gridLayout_4;
+    QLabel *labelImg;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -75,6 +80,11 @@ public:
 
         horizontalLayout->addWidget(checkBoxRemote);
 
+        checkBoxSave = new QCheckBox(groupBoxUvList);
+        checkBoxSave->setObjectName("checkBoxSave");
+
+        horizontalLayout->addWidget(checkBoxSave);
+
 
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
@@ -106,7 +116,21 @@ public:
         gridLayout_2->addWidget(tableViewStatus, 0, 0, 1, 1);
 
 
-        gridLayout_3->addWidget(groupBoxStatus, 0, 1, 1, 1);
+        gridLayout_3->addWidget(groupBoxStatus, 0, 2, 1, 1);
+
+        groupBox = new QGroupBox(centralwidget);
+        groupBox->setObjectName("groupBox");
+        sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy1);
+        gridLayout_4 = new QGridLayout(groupBox);
+        gridLayout_4->setObjectName("gridLayout_4");
+        labelImg = new QLabel(groupBox);
+        labelImg->setObjectName("labelImg");
+
+        gridLayout_4->addWidget(labelImg, 0, 0, 1, 1);
+
+
+        gridLayout_3->addWidget(groupBox, 0, 1, 1, 1);
 
         UVUI->setCentralWidget(centralwidget);
         menubar = new QMenuBar(UVUI);
@@ -127,8 +151,11 @@ public:
         UVUI->setWindowTitle(QCoreApplication::translate("UVUI", "MainWindow", nullptr));
         groupBoxUvList->setTitle(QCoreApplication::translate("UVUI", "uvList", nullptr));
         checkBoxRemote->setText(QCoreApplication::translate("UVUI", "RemoteControl", nullptr));
+        checkBoxSave->setText(QCoreApplication::translate("UVUI", "SaveImage", nullptr));
         pushButtonRefresh->setText(QCoreApplication::translate("UVUI", "refresh", nullptr));
         groupBoxStatus->setTitle(QCoreApplication::translate("UVUI", "Status", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("UVUI", "Image", nullptr));
+        labelImg->setText(QCoreApplication::translate("UVUI", "NO SIGNAL", nullptr));
     } // retranslateUi
 
 };
